@@ -91,6 +91,11 @@ export default defineComponent({
         }
         router.push({ name: "home" });
       } catch (error) {
+        $q.notify({
+          message: "Error! Not logged or error connection server",
+          icon: "error",
+          color: "negative",
+        });
         console.error(error);
       }
     };

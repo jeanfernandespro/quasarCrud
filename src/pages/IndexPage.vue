@@ -110,6 +110,11 @@ export default defineComponent({
           row.index = ++index;
         });
       } catch (error) {
+        $q.notify({
+          message: "Not logged!",
+          icon: "error",
+          color: "negative",
+        });
         console.log(error);
       }
     };
