@@ -67,10 +67,10 @@ export default defineComponent({
 
     const load = () => {
       if (window.localStorage) {
-        if (!localStorage.getItem("firstLoad")) {
-          localStorage["firstLoad"] = true;
+        if (!localStorage.getItem("firstLogin")) {
+          localStorage["firstLogin"] = true;
           window.location.reload();
-        } else localStorage.removeItem("firstLoad");
+        } else localStorage.removeItem("firstLogin");
       }
     };
 
@@ -97,7 +97,7 @@ export default defineComponent({
           router.push({ name: "home" });
         } catch (error) {
           localStorage.setItem("userToken", "");
-          load();
+          load()
           $q.notify({
             message: "Access denied!",
             icon: "error",
