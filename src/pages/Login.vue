@@ -59,7 +59,7 @@ export default defineComponent({
     const { login } = loginService();
     const $q = useQuasar();
     const router = useRouter();
-    
+
     const form = ref({
       email: "",
       password: "",
@@ -79,7 +79,6 @@ export default defineComponent({
             password: form.value.password,
           };
           const { data } = await login(usuario);
-          //localStorage.setItem("userUser", JSON.stringify(data.user));
           localStorage.setItem("userToken", data.token);
           console.log(localStorage.getItem("userToken"));
           $q.notify({
