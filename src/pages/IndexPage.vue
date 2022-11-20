@@ -88,11 +88,21 @@ export default defineComponent({
     const router = useRouter();
 
     onMounted(() => {
+      load();
       getTasks();
     });
 
     let rows = [];
     let taskList = [];
+
+    const load = () => {
+      if (window.localStorage) {
+        if (!localStorage.getItem("firstLoad")) {
+          localStorage["firstLoad"] = true;
+          window.location.reload();
+        } else localStorage.removeItem("firstLoad");
+      }
+    };
 
     const getTasks = async () => {
       try {
@@ -106,7 +116,6 @@ export default defineComponent({
         rows.forEach((row, index) => {
           row.index = ++index;
         });
-        console.log(localStorage.getItem("userToken"));
       } catch (error) {
         console.log(error);
       }

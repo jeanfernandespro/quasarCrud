@@ -65,6 +65,15 @@ export default defineComponent({
       password: "",
     });
 
+    const load = () => {
+      if (window.localStorage) {
+        if (!localStorage.getItem("firstLoad")) {
+          localStorage["firstLoad"] = true;
+          window.location.reload();
+        } else localStorage.removeItem("firstLoad");
+      }
+    };
+
     const onSubmit = async () => {
       if (!form.value.email || !form.value.password) {
         $q.notify({
@@ -88,6 +97,7 @@ export default defineComponent({
           router.push({ name: "home" });
         } catch (error) {
           localStorage.setItem("userToken", "");
+          load();
           $q.notify({
             message: "Access denied!",
             icon: "error",
