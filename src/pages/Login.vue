@@ -51,6 +51,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import loginService from "src/services/login";
+import reset from "src/functions/refreshPage";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 export default defineComponent({
@@ -59,20 +60,12 @@ export default defineComponent({
     const { login } = loginService();
     const $q = useQuasar();
     const router = useRouter();
+    const { resetLogin } = reset();
 
     const form = ref({
       email: "",
       password: "",
     });
-
-    const load = () => {
-      if (window.localStorage) {
-        if (!localStorage.getItem("firstLogin")) {
-          localStorage["firstLogin"] = true;
-          window.location.reload();
-        } else localStorage.removeItem("firstLogin");
-      }
-    };
 
     const onSubmit = async () => {
       if (!form.value.email || !form.value.password) {
@@ -97,12 +90,12 @@ export default defineComponent({
           router.push({ name: "home" });
         } catch (error) {
           localStorage.setItem("userToken", "");
-          load()
           $q.notify({
             message: "Access denied!",
             icon: "error",
             color: "negative",
           });
+          resetLogin();
           console.error(error);
         }
       }

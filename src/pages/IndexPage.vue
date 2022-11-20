@@ -32,6 +32,7 @@
 <script>
 import { defineComponent, ref, onMounted } from "vue";
 import tasksService from "src/services/tasks";
+import reset from "src/functions/refreshPage";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
@@ -40,6 +41,7 @@ export default defineComponent({
   setup() {
     const tasks = ref([]);
     const { list, remove } = tasksService();
+    const { resetLoad } = reset();
     const columns = [
       {
         name: "index",
@@ -88,21 +90,12 @@ export default defineComponent({
     const router = useRouter();
 
     onMounted(() => {
-      load();
+      resetLoad();
       getTasks();
     });
 
     let rows = [];
     let taskList = [];
-
-    const load = () => {
-      if (window.localStorage) {
-        if (!localStorage.getItem("firstLoad")) {
-          localStorage["firstLoad"] = true;
-          window.location.reload();
-        } else localStorage.removeItem("firstLoad");
-      }
-    };
 
     const getTasks = async () => {
       try {
