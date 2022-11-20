@@ -80,7 +80,6 @@ export default defineComponent({
           };
           const { data } = await login(usuario);
           localStorage.setItem("userToken", data.token);
-          console.log(localStorage.getItem("userToken"));
           $q.notify({
             message: "Logged",
             icon: "check",
@@ -88,6 +87,7 @@ export default defineComponent({
           });
           router.push({ name: "home" });
         } catch (error) {
+          localStorage.setItem("userToken", "");
           $q.notify({
             message: "Access denied!",
             icon: "error",
