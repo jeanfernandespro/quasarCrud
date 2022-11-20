@@ -58,7 +58,6 @@ module.exports = configure(function (ctx) {
       vueRouterMode: "hash", // available values: 'hash', 'history'
       env: {
         API_URL: ctx.dev ? process.env.API_DEV : process.env.API_PROD,
-        AUTH_AUTH: process.env.AUTH_AUTH,
       },
       // vueRouterBase,
       // vueDevtools,
