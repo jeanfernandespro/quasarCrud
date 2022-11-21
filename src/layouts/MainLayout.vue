@@ -17,19 +17,23 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above="false" bordered>
-      <q-list>
-        <q-item-label header> Menu </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
     <q-page-container>
+      <q-drawer
+        v-model="leftDrawerOpen"
+        show-if-above="false"
+        bordered
+        v-if="!teste"
+      >
+        <q-list>
+          <q-item-label header> Menu </q-item-label>
+
+          <EssentialLink
+            v-for="link in essentialLinks"
+            :key="link.title"
+            v-bind="link"
+          />
+        </q-list>
+      </q-drawer>
       <router-view />
     </q-page-container>
   </q-layout>
@@ -69,6 +73,8 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
+    const teste = localStorage.getItem("firstLogin");
+    console.log(teste);
 
     return {
       essentialLinks: linksList,
@@ -76,6 +82,7 @@ export default defineComponent({
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
+      teste,
     };
   },
 });

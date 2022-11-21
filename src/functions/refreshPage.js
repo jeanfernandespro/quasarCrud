@@ -6,15 +6,7 @@ export default function reset() {
     } else localStorage.removeItem("firstLoad");
   };
 
-  const resetLogin = () => {
-    if (!localStorage.getItem("firstLogin")) {
-      localStorage["firstLogin"] = true;
-      window.location.reload();
-    } else localStorage.removeItem("firstLogin");
-  };
-
   return {
     resetLoad,
-    resetLogin,
   };
 }
