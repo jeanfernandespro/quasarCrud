@@ -90,10 +90,9 @@ export default defineComponent({
     const router = useRouter();
 
     onMounted(() => {
-      let testando = localStorage.getItem("loggout");
-      if (testando === true) {
+      if (localStorage.getItem("loggout") === null) {
         router.push({ name: "loginPage" });
-      } else if (testando === null) {
+      } else if (localStorage.getItem("loggout") === true) {
         router.push({ name: "loginPage" });
       } else {
         resetLoad();

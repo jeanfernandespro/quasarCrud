@@ -99,7 +99,8 @@ export default defineComponent({
         } catch (error) {
           console.error(error);
           localStorage.setItem("userToken", "");
-          localStorage["firstLogin"] = true;
+          localStorage.removeItem("firstLogin");
+          localStorage.removeItem("loggout");
           router.push({ name: "loginPage" }).then(
             $q
               .notify({
