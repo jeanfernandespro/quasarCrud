@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import loginService from "src/services/login";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -63,6 +63,13 @@ export default defineComponent({
     const form = ref({
       email: "",
       password: "",
+    });
+
+    onMounted(() => {
+      if (localStorage.getItem("loggout")) {
+        localStorage.removeItem("loggout");
+        window.location.reload();
+      }
     });
 
     const onSubmit = async () => {

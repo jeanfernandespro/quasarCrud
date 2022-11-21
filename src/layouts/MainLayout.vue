@@ -13,7 +13,19 @@
 
         <q-toolbar-title> TO-DO LIST </q-toolbar-title>
 
-        <div>by JeanOmeg</div>
+        <div class="row q-gutter-md">
+          <q-btn
+            label="Loggout"
+            color="negative"
+            dense
+            size="sm"
+            v-if="!teste"
+            @click="loggout"
+          />
+          <div>
+            <div>by JeanOmeg</div>
+          </div>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -42,6 +54,8 @@
 <script>
 import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
+import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 
 const linksList = [
   {
@@ -72,9 +86,23 @@ export default defineComponent({
   },
 
   setup() {
+    const $q = useQuasar();
+    const router = useRouter();
     const leftDrawerOpen = ref(false);
     const teste = localStorage.getItem("firstLogin");
     console.log(teste);
+    const loggout = async () => {
+      localStorage["firstLogin"] = true;
+      localStorage["loggout"] = true;
+      localStorage.setItem("userToken", "");
+      await router.push({ name: "loginPage" }).then(
+        $q.notify({
+          message: "Loggout!",
+          icon: "error",
+          color: "negative",
+        })
+      );
+    };
 
     return {
       essentialLinks: linksList,
@@ -83,6 +111,7 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
       teste,
+      loggout,
     };
   },
 });
