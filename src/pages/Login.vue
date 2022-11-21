@@ -80,23 +80,27 @@ export default defineComponent({
           };
           const { data } = await login(usuario);
           localStorage.setItem("userToken", data.token);
-          router.push({ name: "home" });
-          $q.notify({
-            message: "Logged",
-            icon: "check",
-            color: "positive",
-          });
-          localStorage.removeItem("firstLogin")
+          localStorage.removeItem("firstLogin");
+          router.push({ name: "home" }).then(
+            $q.notify({
+              message: "Logged",
+              icon: "check",
+              color: "positive",
+            })
+          );
         } catch (error) {
-          localStorage.setItem("userToken", "");
           console.error(error);
+          localStorage.setItem("userToken", "");
           localStorage["firstLogin"] = true;
-          $q.notify({
-            message: "Access denied!",
-            icon: "error",
-            color: "negative",
-          });
-          window.location.reload();
+          router.push({ name: "loginPage" }).then(
+            $q
+              .notify({
+                message: "Email and/or Password incorrect!",
+                icon: "error",
+                color: "negative",
+              })
+              .then(window.location.reload())
+          );
         }
       }
     };
