@@ -90,8 +90,15 @@ export default defineComponent({
     const router = useRouter();
 
     onMounted(() => {
-      resetLoad();
-      getTasks();
+      let testando = localStorage.getItem("loggout");
+      if (testando === true) {
+        router.push({ name: "loginPage" });
+      } else if (testando === null) {
+        router.push({ name: "loginPage" });
+      } else {
+        resetLoad();
+        getTasks();
+      }
     });
 
     let rows = [];

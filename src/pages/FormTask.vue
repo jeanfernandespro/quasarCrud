@@ -57,6 +57,13 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
 
+    onMounted(() => {
+      let testando = localStorage.getItem("loggout");
+      if (testando === null) {
+        router.push({ name: "loginPage" });
+      }
+    });
+
     onMounted(async () => {
       if (route.params.id) {
         getTask(route.params.id);

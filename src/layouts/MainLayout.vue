@@ -19,7 +19,7 @@
             color="negative"
             dense
             size="sm"
-            v-if="!teste"
+            v-if="teste"
             @click="loggout"
           />
           <div>
@@ -34,7 +34,7 @@
         v-model="leftDrawerOpen"
         show-if-above="false"
         bordered
-        v-if="!teste"
+        v-if="teste"
       >
         <q-list>
           <q-item-label header> Menu </q-item-label>
@@ -58,12 +58,6 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
 const linksList = [
-  {
-    title: "Login",
-    caption: "",
-    icon: "home",
-    route: { name: "loginPage" },
-  },
   {
     title: "TO-DO List",
     caption: "",
@@ -90,17 +84,17 @@ export default defineComponent({
     const router = useRouter();
     const leftDrawerOpen = ref(false);
     const teste = localStorage.getItem("firstLogin");
-    console.log(teste);
     const loggout = async () => {
-      localStorage["firstLogin"] = true;
+      localStorage.removeItem("firstLogin");
       localStorage["loggout"] = true;
       localStorage.setItem("userToken", "");
       await router.push({ name: "loginPage" }).then(
-        $q.notify({
-          message: "Loggout!",
-          icon: "error",
-          color: "negative",
-        })
+        $q
+          .notify({
+            message: "Loggout!",
+            icon: "error",
+            color: "negative",
+          })
       );
     };
 

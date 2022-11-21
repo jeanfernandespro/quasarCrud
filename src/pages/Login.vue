@@ -87,7 +87,8 @@ export default defineComponent({
           };
           const { data } = await login(usuario);
           localStorage.setItem("userToken", data.token);
-          localStorage.removeItem("firstLogin");
+          localStorage["firstLogin"] = true;
+          localStorage["loggout"] = false;
           router.push({ name: "home" }).then(
             $q.notify({
               message: "Logged",
