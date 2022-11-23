@@ -1,16 +1,8 @@
 import { api } from "boot/axios";
 
 export default function useApi(url) {
-  const list = async () => {
-    try {
-      const { data } = await api.get(url);
-      return data;
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
 
-  const listByMail = async (id) => {
+  const listByIdUser = async (id) => {
     try {
       const { data } = await api.get(url, id);
       console.log(data);
@@ -57,8 +49,7 @@ export default function useApi(url) {
   };
 
   return {
-    list,
-    listByMail,
+    listByIdUser,
     post,
     update,
     remove,
