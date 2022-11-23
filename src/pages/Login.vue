@@ -86,6 +86,7 @@ export default defineComponent({
             password: form.value.password,
           };
           const { data } = await login(usuario);
+          localStorage["email"] = form.value.email;
           localStorage.setItem("userToken", data.token);
           localStorage["firstLogin"] = true;
           localStorage["loggout"] = false;

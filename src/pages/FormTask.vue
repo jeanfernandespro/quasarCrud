@@ -73,6 +73,7 @@ export default defineComponent({
     const form = ref({
       title: "",
       status: "",
+      email: localStorage.getItem("mail"),
     });
 
     const getTask = async (id) => {

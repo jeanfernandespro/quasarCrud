@@ -40,7 +40,7 @@ export default defineComponent({
   name: "IndexPage",
   setup() {
     const tasks = ref([]);
-    const { list, remove } = tasksService();
+    const { list, listByMail, remove } = tasksService();
     const { resetLoad } = reset();
     const columns = [
       {
@@ -96,16 +96,41 @@ export default defineComponent({
         router.push({ name: "loginPage" });
       } else {
         resetLoad();
-        getTasks();
+        getTaskMail();
+        // getTasks();
       }
     });
 
     let rows = [];
     let taskList = [];
 
-    const getTasks = async () => {
+    // const getTasks = async () => {
+    //   try {
+    //     const data = await list();
+    //     tasks.value = data;
+    //     taskList = tasks.value;
+    //     rows = [];
+    //     for (let i = 0; i < taskList.length; i++) {
+    //       rows = rows.concat(taskList[i]);
+    //     }
+    //     rows.forEach((row, index) => {
+    //       row.index = ++index;
+    //     });
+    //   } catch (error) {
+    //     $q.notify({
+    //       message: "Not logged!",
+    //       icon: "error",
+    //       color: "negative",
+    //     });
+    //     console.log(error);
+    //   }
+    // };
+
+    const getTaskMail = async (id) => {
       try {
-        const data = await list();
+        const form = { email: localStorage.getItem("mail") };
+        const data = await listByMail(id);
+        console.log(data);
         tasks.value = data;
         taskList = tasks.value;
         rows = [];
