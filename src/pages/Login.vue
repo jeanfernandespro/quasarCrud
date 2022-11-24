@@ -60,16 +60,16 @@ export default defineComponent({
     const $q = useQuasar();
     const router = useRouter();
 
+    onMounted(() => {
+      const loggout = localStorage.getItem("loggout");
+      if (loggout === "false") {
+        router.push({ name: "home" });
+      }
+    });
+
     const form = ref({
       email: "",
       password: "",
-    });
-
-    onMounted(() => {
-      if (localStorage.getItem("loggout")) {
-        localStorage.removeItem("loggout");
-        window.location.reload();
-      }
     });
 
     const onSubmit = async () => {
@@ -88,28 +88,24 @@ export default defineComponent({
           const { data } = await login(usuario);
           localStorage["email"] = form.value.email;
           localStorage.setItem("userToken", data.token);
-          localStorage["firstLogin"] = true;
-          localStorage["loggout"] = false;
-          router.push({ name: "home" }).then(
-            $q.notify({
-              message: "Logged",
-              icon: "check",
-              color: "positive",
-            })
-          );
+          localStorage["loggout"] = "false";
+          $q.notify({
+            message: "Logged",
+            icon: "check",
+            color: "positive",
+          });
+          router.push({ name: "home" });
         } catch (error) {
           console.error(error);
           localStorage.setItem("userToken", "");
-          localStorage.removeItem("firstLogin");
-          localStorage.removeItem("loggout");
+          localStorage.removeItem("firstLoad");
+          localStorage["loggout"] = "true";
           router.push({ name: "loginPage" }).then(
-            $q
-              .notify({
-                message: "Email and/or Password incorrect!",
-                icon: "error",
-                color: "negative",
-              })
-              .then(window.location.reload())
+            $q.notify({
+              message: "Email and/or Password incorrect!",
+              icon: "error",
+              color: "negative",
+            })
           );
         }
       }

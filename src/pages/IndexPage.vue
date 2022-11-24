@@ -1,4 +1,5 @@
 <template>
+  <tool-bar/>
   <q-page padding>
     <q-table title="Tasks" :rows="tasks" :columns="columns" row-key="index">
       <template v-slot:top>
@@ -31,17 +32,31 @@
 
 <script>
 import { defineComponent, ref, onMounted } from "vue";
+import ToolBar from "components/ToolBar.vue";
 import tasksService from "src/services/tasks";
-import reset from "src/functions/refreshPage";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "IndexPage",
+  components: {
+    ToolBar,
+  },
   setup() {
     const tasks = ref([]);
     const { listByIdUser, remove } = tasksService();
-    const { resetLoad } = reset();
+
+    onMounted(() => {
+      if (
+        localStorage.getItem("loggout") === null ||
+        localStorage.getItem("loggout") === "true"
+      ) {
+        router.push({ name: "loginPage" });
+      } else {
+        getTaskByIdUser();
+      }
+    });
+
     const columns = [
       {
         name: "index",
@@ -89,24 +104,12 @@ export default defineComponent({
     const $q = useQuasar();
     const router = useRouter();
 
-    onMounted(() => {
-      if (localStorage.getItem("loggout") === null) {
-        router.push({ name: "loginPage" });
-      } else if (localStorage.getItem("loggout") === true) {
-        router.push({ name: "loginPage" });
-      } else {
-        resetLoad();
-        getTaskByIdUser();
-      }
-    });
-
     let rows = [];
     let taskList = [];
 
     const getTaskByIdUser = async (id) => {
       try {
         const data = await listByIdUser(id);
-        console.log(data);
         tasks.value = data;
         taskList = tasks.value;
         rows = [];
