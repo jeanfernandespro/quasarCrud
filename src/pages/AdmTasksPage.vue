@@ -155,7 +155,7 @@ export default defineComponent({
         }).onOk(async () => {
           await remove(id);
           $q.notify({ message: "Deleted", icon: "check", color: "positive" });
-          getTaskByIdUser();
+          getAllTasks();
         });
       } catch (error) {
         $q.notify({ message: "Error!", icon: "times", color: "negative" });
