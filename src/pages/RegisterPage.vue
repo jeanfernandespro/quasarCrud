@@ -1,4 +1,5 @@
 <template>
+  <tool-bar />
   <q-page class="column">
     <div class="row col-lg-12 col-xs-6 justify-center">
       <h1 class="text-h5 text-bold text-primary">Create new account</h1>
@@ -71,16 +72,29 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import createsService from "src/services/create";
 import { useQuasar } from "quasar";
+import ToolBar from "components/ToolBar.vue";
 import { useRouter } from "vue-router";
 export default defineComponent({
   name: "RegisterPage",
+
+  components: {
+    ToolBar,
+  },
+
   setup() {
     const { createUse } = createsService();
     const $q = useQuasar();
     const router = useRouter();
+
+    onMounted(() => {
+      const logout = localStorage.getItem("logout");
+      if (logout === "false") {
+        router.push({ name: "home" });
+      }
+    });
 
     const form = ref({
       real_name: "",

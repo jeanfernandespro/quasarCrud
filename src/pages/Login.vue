@@ -1,11 +1,10 @@
 <template>
+  <tool-bar />
   <q-page class="padding">
-    <div class="column">
-      <div class="row q-mx-auto">
-        <h1 class="text-h5 text-bold text-primary q-my-md">Login TO-DO List</h1>
-      </div>
-      <div class="row justify-center">
-        <q-card square bordered class="col-lg-12 col-xs-6 q-pa-md">
+    <div class="row justify-center items-center content-center">
+      <div class="col-6 q-gutter-sm q-col-gutter-y-sm">
+        <h1 class="row justify-center text-h5 text-bold text-primary">Login TO-DO List</h1>
+        <q-card square bordered class="col-xs-5 q-pa-md">
           <q-form @submit="onSubmit" class="q-gutter-md">
             <q-input
               square
@@ -28,11 +27,10 @@
                 label="Login"
                 color="primary"
                 type="submit"
-                class="col-lg-12 col-xs-4"
               />
             </div>
           </q-form>
-          <q-card-section class="text-center q-pa-none">
+          <q-card-section class="row justify-center">
             <p class="text-grey-6">
               Not registered? Create an
               <router-link
@@ -51,18 +49,24 @@
 <script>
 import { defineComponent, ref, onMounted } from "vue";
 import loginService from "src/services/login";
+import ToolBar from "components/ToolBar.vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 export default defineComponent({
   name: "LoginPage",
+
+  components: {
+    ToolBar,
+  },
+
   setup() {
     const { login } = loginService();
     const $q = useQuasar();
     const router = useRouter();
 
     onMounted(() => {
-      const loggout = localStorage.getItem("loggout");
-      if (loggout === "false") {
+      const logout = localStorage.getItem("logout");
+      if (logout === "false") {
         router.push({ name: "home" });
       }
     });
@@ -86,23 +90,23 @@ export default defineComponent({
             password: form.value.password,
           };
           const { data } = await login(usuario);
-          localStorage["email"] = form.value.email;
-          localStorage.setItem("userToken", data.token);
-          localStorage["loggout"] = "false";
+          localStorage["userToken"] = data.token;
+          localStorage["admin"] = data.user.admin;
+          localStorage["logout"] = "false";
           $q.notify({
-            message: "Logged",
+            message: "Logged!",
             icon: "check",
             color: "positive",
           });
           router.push({ name: "home" });
         } catch (error) {
           console.error(error);
-          localStorage.setItem("userToken", "");
-          localStorage.removeItem("firstLoad");
-          localStorage["loggout"] = "true";
+          localStorage.removeItem("admin");
+          localStorage.removeItem("userToken");
+          localStorage.removeItem("logout");
           router.push({ name: "loginPage" }).then(
             $q.notify({
-              message: "Email and/or Password incorrect!",
+              message: "Incorrect email or password!",
               icon: "error",
               color: "negative",
             })

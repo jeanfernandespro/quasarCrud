@@ -1,7 +1,7 @@
-import useApi from "src/composables/UseApi";
+import taskApi from "src/composables/TaskApi";
 
 export default function tasksService() {
-  const { listByIdUser, post, update, remove, getById } = useApi("tasks");
+  const { listByIdUser, post, update, remove, getById } = taskApi("tasks");
 
   return {
     listByIdUser,

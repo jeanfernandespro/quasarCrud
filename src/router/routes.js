@@ -23,6 +23,16 @@ const routes = [
         name: "formTask",
         component: () => import("pages/FormTask.vue"),
       },
+      {
+        path: "all-tasks",
+        name: "allTasks",
+        component: () => import("src/pages/AdmTasksPage.vue"),
+      },
+      {
+        path: "form-user/:id?",
+        name: "formUser",
+        component: () => import("pages/FormTask.vue"),
+      },
     ],
   },
 

@@ -3,20 +3,20 @@
   <q-page padding>
     <q-table title="Tasks" :rows="tasks" :columns="columns" row-key="index">
       <template v-slot:top>
-        <span class="text-h5">Tasks</span>
+        <span class="text-h5">All tasks</span>
         <q-space />
-        <q-btn color="primary" label="New Task" :to="{ name: 'formTask' }" />
+        <!-- <q-btn color="primary" label="New Task" :to="{ name: 'formTask' }" /> -->
       </template>
 
       <template v-slot:body-cell-actions="props">
         <q-td :props="props" class="q-gutter-sm">
-          <q-btn
+          <!-- <q-btn
             icon="edit"
             color="primary"
             dense
             size="sm"
             @click="editTask(props.row.id)"
-          />
+          /> -->
           <q-btn
             icon="delete"
             color="negative"
@@ -33,12 +33,12 @@
 <script>
 import { defineComponent, ref, onMounted } from "vue";
 import ToolBar from "components/ToolBar.vue";
-import tasksService from "src/services/tasks";
+import admTasksService from "src/services/admTasks";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
 export default defineComponent({
-  name: "IndexPage",
+  name: "AdmTasksPage",
 
   components: {
     ToolBar,
@@ -46,7 +46,7 @@ export default defineComponent({
 
   setup() {
     const tasks = ref([]);
-    const { listByIdUser, remove } = tasksService();
+    const { listAllTasks, remove } = admTasksService();
 
     onMounted(() => {
       if (
@@ -55,7 +55,7 @@ export default defineComponent({
       ) {
         router.push({ name: "loginPage" });
       } else {
-        getTaskByIdUser();
+        getAllTasks();
       }
     });
 
@@ -64,6 +64,13 @@ export default defineComponent({
         name: "index",
         label: "#",
         field: "index",
+        align: "left",
+        sortable: true,
+      },
+      {
+        name: "id",
+        field: "id",
+        label: "Task ID",
         align: "left",
         sortable: true,
       },
@@ -96,6 +103,13 @@ export default defineComponent({
         sortable: true,
       },
       {
+        name: "id_user",
+        field: "id_user",
+        label: "User ID",
+        align: "right",
+        sortable: true,
+      },
+      {
         name: "actions",
         field: "actions",
         label: "Actions",
@@ -109,9 +123,9 @@ export default defineComponent({
     let rows = [];
     let taskList = [];
 
-    const getTaskByIdUser = async (id) => {
+    const getAllTasks = async () => {
       try {
-        const data = await listByIdUser(id);
+        const data = await listAllTasks();
         tasks.value = data;
         taskList = tasks.value;
         rows = [];

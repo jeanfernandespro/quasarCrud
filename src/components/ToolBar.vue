@@ -1,30 +1,62 @@
 <template>
-  <q-toolbar>
-    <q-btn
-      v-if="teste"
-      size="md"
-      icon="menu"
-      aria-label="Menu"
-      @click="toggleLeftDrawer"
-    />
-
-    <q-toolbar-title> TO-DO LIST </q-toolbar-title>
-
-    <div class="row q-gutter-md" v-if="teste">
-      <q-btn label="Logout" color="negative" size="md" @click="loggout" />
-    </div>
-  </q-toolbar>
-  <q-drawer v-model="leftDrawerOpen" bordered>
-    <q-list>
-      <q-item-label header> Menu </q-item-label>
-
-      <EssentialLink
-        v-for="link in essentialLinks"
-        :key="link.title"
-        v-bind="link"
-      />
-    </q-list>
-  </q-drawer>
+  <div>
+    <q-header elevated>
+      <q-toolbar class="row justify-between bg-primary text-white">
+        <div>
+          <q-btn
+            v-if="logoutif === 'false'"
+            size="md"
+            icon="menu"
+            aria-label="Menu"
+            @click="drawer = !drawer"
+          />
+        </div>
+        <div>
+          <q-toolbar-title style="font-size: 3em"> TO-DO LIST </q-toolbar-title>
+        </div>
+        <div>
+          <q-btn
+            v-if="logoutif === 'false'"
+            label="Logout"
+            color="negative"
+            size="md"
+            @click="logout"
+          />
+        </div>
+      </q-toolbar>
+    </q-header>
+    <q-drawer
+      v-model="drawer"
+      :mini="miniState"
+      @mouseover="miniState = false"
+      @mouseout="miniState = true"
+      mini-to-overlay
+      :width="200"
+      :breakpoint="500"
+      elevated
+      class="bg-white"
+    >
+      <q-list>
+        <q-item-label header class="bg-primary text-white" text>
+          Menu
+        </q-item-label>
+        <div>
+          <EssentialLink
+            v-for="link in essentialLinks"
+            :key="link.title"
+            v-bind="link"
+          />
+        </div>
+        <div v-if="admin === 'true'">
+          <EssentialLink
+            v-for="link in adminLinks"
+            :key="link.title"
+            v-bind="link"
+          />
+        </div>
+      </q-list>
+    </q-drawer>
+  </div>
 </template>
 
 <script>
@@ -32,12 +64,12 @@ import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
-let teste = localStorage.getItem("loggout");
+
 const linksList = [
   {
-    title: "TO-DO List",
+    title: "Tasks",
     caption: "",
-    icon: "fact_check",
+    icon: "library_add_check",
     route: { name: "home" },
   },
   {
@@ -45,6 +77,21 @@ const linksList = [
     caption: "",
     icon: "add_task",
     route: { name: "formTask" },
+  },
+];
+
+const adminList = [
+  {
+    title: "All tasks",
+    caption: "",
+    icon: "fact_check",
+    route: { name: "allTasks" },
+  },
+  {
+    title: "All users",
+    caption: "",
+    icon: "group",
+    route: { name: "formUser" },
   },
 ];
 
@@ -58,12 +105,14 @@ export default defineComponent({
   setup() {
     const $q = useQuasar();
     const router = useRouter();
-    const leftDrawerOpen = ref(false);
-    const loggout = async () => {
-      localStorage["loggout"] = "true";
-      localStorage.setItem("userToken", "");
+    const logoutif = localStorage.getItem("logout");
+    const admin = localStorage.getItem("admin");
+    const logout = async () => {
+      localStorage.removeItem("admin");
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("logout");
       $q.notify({
-        message: "Loggout!",
+        message: "Logout!",
         icon: "error",
         color: "negative",
       });
@@ -72,12 +121,12 @@ export default defineComponent({
 
     return {
       essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
-      teste,
-      loggout,
+      adminLinks: adminList,
+      logoutif,
+      admin,
+      drawer: ref(false),
+      miniState: ref(true),
+      logout,
     };
   },
 });

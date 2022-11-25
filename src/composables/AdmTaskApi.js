@@ -1,11 +1,10 @@
 import { api } from "boot/axios";
 
-export default function useApi(url) {
+export default function admTaskApi(url) {
 
-  const listByIdUser = async (id) => {
+  const listAllTasks = async () => {
     try {
-      const { data } = await api.get(url, id);
-      console.log(data);
+      const { data } = await api.get(url);
       return data;
     } catch (error) {
       throw new Error(error);
@@ -49,7 +48,7 @@ export default function useApi(url) {
   };
 
   return {
-    listByIdUser,
+    listAllTasks,
     post,
     update,
     remove,
