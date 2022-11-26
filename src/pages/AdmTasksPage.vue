@@ -1,5 +1,5 @@
 <template>
-  <tool-bar/>
+  <tool-bar />
   <q-page padding>
     <q-table title="Tasks" :rows="tasks" :columns="columns" row-key="index">
       <template v-slot:top>
@@ -55,7 +55,11 @@ export default defineComponent({
       ) {
         router.push({ name: "loginPage" });
       } else {
-        getAllTasks();
+        if (localStorage.getItem("admin") === "false" || localStorage.getItem("admin") === null) {
+          router.push({ name: "home" });
+        } else {
+          getAllTasks();
+        }
       }
     });
 
@@ -64,6 +68,20 @@ export default defineComponent({
         name: "index",
         label: "#",
         field: "index",
+        align: "left",
+        sortable: true,
+      },
+      {
+        name: "email",
+        field: "email",
+        label: "User",
+        align: "left",
+        sortable: true,
+      },
+      {
+        name: "id_user",
+        field: "id_user",
+        label: "User ID",
         align: "left",
         sortable: true,
       },
@@ -100,13 +118,6 @@ export default defineComponent({
         field: "update_at",
         label: "Update",
         align: "left",
-        sortable: true,
-      },
-      {
-        name: "id_user",
-        field: "id_user",
-        label: "User ID",
-        align: "right",
         sortable: true,
       },
       {
