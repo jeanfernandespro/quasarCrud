@@ -1,73 +1,76 @@
 <template>
   <tool-bar />
-  <q-page class="column">
-    <div class="row col-lg-12 col-xs-6 justify-center">
-      <h1 class="text-h5 text-bold text-primary">Create new account</h1>
-    </div>
-    <q-card bordered class="row justify-center">
-      <q-card-section>
-        <q-form @submit="onSubmit" class="q-gutter-md">
-          <q-input
-            square
-            filled
-            clearable
-            v-model="form.real_name"
-            label="Name"
-          />
-          <q-input
-            square
-            filled
-            clearable
-            v-model="form.email"
-            type="email"
-            label="Email"
-          />
-          <q-input
-            square
-            filled
-            clearable
-            v-model="form.c_email"
-            type="email"
-            label="Confirm Email"
-          />
-          <q-input
-            square
-            filled
-            clearable
-            v-model="form.phone"
-            type="tel"
-            label="Cell Phone"
-            mask="(##) ##### - ####"
-            fill-mask
-          />
-          <q-input
-            square
-            filled
-            clearable
-            v-model="form.user_password"
-            type="password"
-            label="Password"
-          />
-          <q-input
-            square
-            filled
-            clearable
-            v-model="form.password"
-            type="password"
-            label="Confirm Password"
-          />
-          <div class="row justify-center q-gutter-md">
-            <q-btn
-              label="Cancel"
-              color="white"
-              text-color="primary"
-              :to="{ name: 'loginPage' }"
+  <q-page>
+    <div class="row justify-center items-center content-center">
+      <div class="col-6 q-gutter-sm q-col-gutter-sm">
+        <div class="row justify-center text-h5 text-bold text-primary">
+          Create account
+        </div>
+        <q-card bordered class="q-pa-md">
+          <q-form @submit="onSubmit" class="q-gutter-md">
+            <q-input
+              square
+              filled
+              clearable
+              v-model="form.real_name"
+              type="text"
+              label="Name"
             />
-            <q-btn label="Create account" color="primary" type="submit" />
-          </div>
-        </q-form>
-      </q-card-section>
-    </q-card>
+            <q-input
+              square
+              filled
+              clearable
+              v-model="form.username"
+              type="text"
+              label="Username"
+            />
+            <q-input
+              square
+              filled
+              clearable
+              v-model="form.email"
+              type="email"
+              label="Email"
+            />
+            <q-input
+              square
+              filled
+              clearable
+              v-model="form.user_password"
+              type="password"
+              label="Password"
+            />
+            <q-input
+              square
+              filled
+              clearable
+              v-model="form.password"
+              type="password"
+              label="Confirm your password"
+            />
+            <q-input
+              square
+              filled
+              clearable
+              v-model="form.phone"
+              type="tel"
+              label="Cell Phone"
+              mask="(##) ##### - ####"
+              fill-mask
+            />
+            <div class="row justify-between">
+              <q-btn
+                label="Cancel"
+                color="negative"
+                text-color="white"
+                :to="{ name: 'loginPage' }"
+                />
+                <q-btn label="Create your account" color="primary" type="submit" />
+            </div>
+          </q-form>
+        </q-card>
+      </div>
+    </div>
   </q-page>
 </template>
 

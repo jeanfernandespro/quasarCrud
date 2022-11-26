@@ -12,7 +12,7 @@
           />
         </div>
         <div>
-          <q-toolbar-title style="font-size: 3em"> TO-DO LIST </q-toolbar-title>
+          <q-toolbar-title class="text-h3"> TO-DO LIST </q-toolbar-title>
         </div>
         <div>
           <q-btn

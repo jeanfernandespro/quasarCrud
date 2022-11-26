@@ -1,10 +1,12 @@
 <template>
   <tool-bar />
-  <q-page class="padding">
+  <q-page>
     <div class="row justify-center items-center content-center">
-      <div class="col-6 q-gutter-sm q-col-gutter-y-sm">
-        <h1 class="row justify-center text-h5 text-bold text-primary">Login TO-DO List</h1>
-        <q-card square bordered class="col-xs-5 q-pa-md">
+      <div class="col-6 q-gutter-sm q-col-gutter-sm">
+        <div class="row justify-center text-h5 text-bold text-primary">
+          Login
+        </div>
+        <q-card bordered class="q-pa-md">
           <q-form @submit="onSubmit" class="q-gutter-md">
             <q-input
               square
@@ -22,24 +24,16 @@
               type="password"
               label="password"
             />
-            <div class="row justify-center">
+            <div class="row justify-between">
               <q-btn
-                label="Login"
-                color="primary"
-                type="submit"
+                label="Create account"
+                color="negative"
+                text-color="white"
+                :to="{ name: 'registerPage' }"
               />
+              <q-btn label="Login account" color="primary" type="submit" />
             </div>
           </q-form>
-          <q-card-section class="row justify-center">
-            <p class="text-grey-6">
-              Not registered? Create an
-              <router-link
-                class="text-primary text-weight-bolder text-none"
-                :to="{ name: 'registerPage' }"
-                >Account</router-link
-              >
-            </p>
-          </q-card-section>
         </q-card>
       </div>
     </div>
