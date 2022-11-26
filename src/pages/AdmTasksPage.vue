@@ -5,18 +5,9 @@
       <template v-slot:top>
         <span class="text-h5">All tasks</span>
         <q-space />
-        <!-- <q-btn color="primary" label="New Task" :to="{ name: 'formTask' }" /> -->
       </template>
-
       <template v-slot:body-cell-actions="props">
         <q-td :props="props" class="q-gutter-sm">
-          <!-- <q-btn
-            icon="edit"
-            color="primary"
-            dense
-            size="sm"
-            @click="editTask(props.row.id)"
-          /> -->
           <q-btn
             icon="delete"
             color="negative"
@@ -176,15 +167,10 @@ export default defineComponent({
       }
     };
 
-    const editTask = (id) => {
-      router.push({ name: "formTask", params: { id } });
-    };
-
     return {
       tasks,
       columns,
       deleteTask,
-      editTask,
     };
   },
 });

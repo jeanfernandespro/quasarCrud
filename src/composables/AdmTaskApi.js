@@ -20,24 +20,6 @@ export default function admTaskApi(url) {
     }
   };
 
-  const post = async (form) => {
-    try {
-      const { data } = await api.post(url, form);
-      return data;
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
-
-  const update = async (form, id) => {
-    try {
-      const { data } = await api.put(`${url}/${id}`, form);
-      return data;
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
-
   const remove = async (id) => {
     try {
       const { data } = await api.delete(`${url}/${id}`);
@@ -49,8 +31,6 @@ export default function admTaskApi(url) {
 
   return {
     listAllTasks,
-    post,
-    update,
     remove,
     getById,
   };
