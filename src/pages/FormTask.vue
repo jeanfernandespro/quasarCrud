@@ -69,17 +69,16 @@ export default defineComponent({
         localStorage.getItem("logout") === null ||
         localStorage.getItem("logout") === "true"
       ) {
-        router.push({ name: "loginPage" });
+        router.push({ name: "notFound" });
       }
       if (route.params.id) {
-          getTask(route.params.id);
+        getTask(route.params.id);
       }
     });
 
     const form = ref({
       title: "",
       status: "",
-      email: localStorage.getItem("mail"),
     });
 
     const getTask = async (id) => {

@@ -31,13 +31,14 @@ const routes = [
       {
         path: "form-user/:id?",
         name: "formUser",
-        component: () => import("pages/FormTask.vue"),
+        component: () => import("pages/FormUser.vue"),
       },
     ],
   },
 
   {
     path: "/:catchAll(.*)*",
+    name: "notFound",
     component: () => import("pages/ErrorNotFound.vue"),
   },
 ];

@@ -53,7 +53,7 @@ export default defineComponent({
         localStorage.getItem("logout") === null ||
         localStorage.getItem("logout") === "true"
       ) {
-        router.push({ name: "loginPage" });
+        router.push({ name: "notFound" });
       } else {
         getTaskByIdUser();
       }

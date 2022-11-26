@@ -53,10 +53,13 @@ export default defineComponent({
         localStorage.getItem("logout") === null ||
         localStorage.getItem("logout") === "true"
       ) {
-        router.push({ name: "loginPage" });
+        router.push({ name: "notFound" });
       } else {
-        if (localStorage.getItem("admin") === "false" || localStorage.getItem("admin") === null) {
-          router.push({ name: "home" });
+        if (
+          localStorage.getItem("admin") === "false" ||
+          localStorage.getItem("admin") === null
+        ) {
+          router.push({ name: "notFound" });
         } else {
           getAllTasks();
         }

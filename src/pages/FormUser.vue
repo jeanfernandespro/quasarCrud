@@ -52,7 +52,7 @@ import ToolBar from "components/ToolBar.vue";
 import { useQuasar } from "quasar";
 import { useRouter, useRoute } from "vue-router";
 export default defineComponent({
-  name: "FormTask",
+  name: "FormUser",
 
   components: {
     ToolBar,
@@ -69,17 +69,22 @@ export default defineComponent({
         localStorage.getItem("logout") === null ||
         localStorage.getItem("logout") === "true"
       ) {
-        router.push({ name: "loginPage" });
-      }
-      if (route.params.id) {
+        router.push({ name: "notFound" });
+      } else {
+        if (
+          localStorage.getItem("admin") === "false" ||
+          localStorage.getItem("admin") === null
+        ) {
+          router.push({ name: "notFound" });
+        } else {
           getTask(route.params.id);
+        }
       }
     });
 
     const form = ref({
       title: "",
       status: "",
-      email: localStorage.getItem("mail"),
     });
 
     const getTask = async (id) => {
