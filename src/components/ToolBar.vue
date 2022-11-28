@@ -91,7 +91,7 @@ const adminList = [
     title: "All users",
     caption: "",
     icon: "group",
-    route: { name: "formUser" },
+    route: { name: "allUsers" },
   },
 ];
 

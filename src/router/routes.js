@@ -29,9 +29,9 @@ const routes = [
         component: () => import("src/pages/AdmTasksPage.vue"),
       },
       {
-        path: "form-user/:id?",
-        name: "formUser",
-        component: () => import("pages/FormUser.vue"),
+        path: "all-users/:id?",
+        name: "allUsers",
+        component: () => import("src/pages/AllUsers.vue"),
       },
     ],
   },
