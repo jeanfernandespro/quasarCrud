@@ -1,62 +1,58 @@
 <template>
-  <div>
-    <q-header elevated>
-      <q-toolbar class="row justify-between bg-primary text-white">
-        <div>
-          <q-btn
-            v-if="logoutif === 'false'"
-            size="md"
-            icon="menu"
-            aria-label="Menu"
-            @click="drawer = !drawer"
-          />
-        </div>
-        <div>
-          <q-toolbar-title class="text-h3"> TO-DO LIST </q-toolbar-title>
-        </div>
-        <div>
-          <q-btn
-            v-if="logoutif === 'false'"
-            label="Logout"
-            color="negative"
-            size="md"
-            @click="logout"
-          />
-        </div>
-      </q-toolbar>
-    </q-header>
-    <q-drawer
-      v-model="drawer"
-      :mini="miniState"
-      @mouseover="miniState = false"
-      @mouseout="miniState = true"
-      mini-to-overlay
-      :width="200"
-      :breakpoint="500"
-      elevated
-      class="bg-white"
-    >
-      <q-list>
-        <q-item-label header class="bg-primary text-white" text>
-          Menu
-        </q-item-label>
-        <div>
-          <EssentialLink
-            v-for="link in essentialLinks"
-            :key="link.title"
-            v-bind="link"
-          />
-        </div>
-        <div v-if="admin === 'true'">
-          <EssentialLink
-            v-for="link in adminLinks"
-            :key="link.title"
-            v-bind="link"
-          />
-        </div>
-      </q-list>
-    </q-drawer>
-  </div>
+  <q-header elevated>
+    <div class="row justify-center">
+      <div class="col-11 q-gutter-sm q-col-gutter-sm">
+        <q-toolbar class="row justify-between bg-primary text-white">
+          <div>
+            <q-btn
+              v-if="logoutif === 'false'"
+              size="md"
+              icon="menu"
+              aria-label="Menu"
+              @click="drawer = !drawer"
+            />
+          </div>
+          <div>
+            <q-toolbar-title style="font-size:1.7rem;"> TO-DO LIST </q-toolbar-title>
+          </div>
+          <div>
+            <q-btn
+              v-if="logoutif === 'false'"
+              icon="logout"
+              color="negative"
+              size="md"
+              @click="logout"
+            />
+          </div>
+        </q-toolbar>
+        <q-space></q-space>
+      </div>
+    </div>
+  </q-header>
+  <q-drawer
+    v-model="drawer"
+    :width="150"
+    elevated
+    mini-to-overlay
+    class="bg-white"
+  >
+    <q-list>
+      <div>
+        <EssentialLink
+          v-for="link in essentialLinks"
+          :key="link.title"
+          v-bind="link"
+        />
+      </div>
+      <div v-if="admin === 'true'">
+        <EssentialLink
+          v-for="link in adminLinks"
+          :key="link.title"
+          v-bind="link"
+        />
+      </div>
+    </q-list>
+  </q-drawer>
 </template>
 
 <script>
