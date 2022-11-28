@@ -64,8 +64,12 @@
                 color="negative"
                 text-color="white"
                 :to="{ name: 'loginPage' }"
-                />
-                <q-btn label="Create your account" color="primary" type="submit" />
+              />
+              <q-btn
+                label="Create your account"
+                color="primary"
+                type="submit"
+              />
             </div>
           </q-form>
         </q-card>
@@ -101,18 +105,15 @@ export default defineComponent({
 
     const form = ref({
       real_name: "",
+      username: "",
       email: "",
-      c_email: "",
       phone: "",
       user_password: "",
       password: "",
     });
 
     const onSubmit = async () => {
-      if (
-        form.value.user_password !== form.value.password ||
-        form.value.email !== form.value.c_email
-      ) {
+      if (form.value.user_password !== form.value.password) {
         $q.notify({ message: "Error", icon: "check", color: "negative" });
       } else {
         try {
