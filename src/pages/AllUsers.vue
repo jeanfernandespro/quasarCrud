@@ -174,9 +174,17 @@ export default defineComponent({
           cancel: true,
           persistent: true,
         }).onOk(async () => {
-          await remove(id);
-          $q.notify({ message: "Deleted", icon: "check", color: "positive" });
-          getAllUsers();
+          const deleted = await remove(id);
+          if (deleted) {
+            $q.notify({ message: "Deleted", icon: "check", color: "positive" });
+            getAllUsers();
+          } else {
+            $q.notify({
+              message: "Error! Impossible to delete your own account",
+              icon: "error",
+              color: "negative",
+            });
+          }
         });
       } catch (error) {
         $q.notify({ message: "Error!", icon: "times", color: "negative" });

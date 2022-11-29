@@ -153,7 +153,7 @@ export default defineComponent({
   },
 
   setup() {
-    const { createUse } = createsService();
+    const { createUser } = createsService();
     const $q = useQuasar();
     const router = useRouter();
 
@@ -178,7 +178,7 @@ export default defineComponent({
         $q.notify({ message: "Error", icon: "check", color: "negative" });
       } else {
         try {
-          await createUse(form.value);
+          await createUser(form.value);
           $q.notify({ message: "Created", icon: "check", color: "positive" });
           router.push({ name: "loginPage" });
         } catch (error) {

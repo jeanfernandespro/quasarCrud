@@ -1,7 +1,7 @@
 import { api } from "boot/axios";
 
 export default function createApi(url) {
-  const createUse = async (form) => {
+  const createUser = async (form) => {
     try {
       const { data } = await api.post(url, form);
       return data;
@@ -11,6 +11,6 @@ export default function createApi(url) {
   };
 
   return {
-    createUse,
+    createUser,
   };
 }
