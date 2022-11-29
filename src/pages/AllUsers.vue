@@ -175,19 +175,23 @@ export default defineComponent({
           persistent: true,
         }).onOk(async () => {
           const deleted = await remove(id);
-          if (deleted) {
-            $q.notify({ message: "Deleted", icon: "check", color: "positive" });
-            getAllUsers();
-          } else {
+          if (!deleted) {
             $q.notify({
               message: "Error! Impossible to delete your own account",
               icon: "error",
               color: "negative",
             });
+          } else {
+            $q.notify({ message: "Deleted", icon: "check", color: "positive" });
+            getAllUsers();
           }
         });
       } catch (error) {
-        $q.notify({ message: "Error!", icon: "times", color: "negative" });
+        $q.notify({
+          message: "Error! Please try again later...",
+          icon: "error",
+          color: "negative",
+        });
       }
     };
 
