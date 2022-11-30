@@ -150,11 +150,6 @@ export default defineComponent({
           row.index = ++index;
         });
       } catch (error) {
-        $q.notify({
-          message: "Not logged!",
-          icon: "error",
-          color: "negative",
-        });
         console.log(error);
       }
     };
@@ -168,8 +163,8 @@ export default defineComponent({
           persistent: true,
         }).onOk(async () => {
           await remove(id);
-          $q.notify({ message: "Deleted", icon: "check", color: "positive" });
           getTaskByIdUser();
+          $q.notify({ message: "Deleted", icon: "check", color: "positive" });
         });
       } catch (error) {
         $q.notify({ message: "Error!", icon: "times", color: "negative" });

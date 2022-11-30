@@ -1,7 +1,6 @@
 import { api } from "boot/axios";
 
 export default function taskApi(url) {
-
   const listByIdUser = async (id) => {
     try {
       const { data } = await api.get(url, id);

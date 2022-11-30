@@ -111,6 +111,7 @@ export default defineComponent({
           };
           const { data } = await login(usuario);
           localStorage["userToken"] = data.token;
+          localStorage["refreshToken"] = data.refreshToken;
           localStorage["admin"] = data.user.admin;
           localStorage["logout"] = "false";
           $q.notify({
