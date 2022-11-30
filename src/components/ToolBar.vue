@@ -13,7 +13,9 @@
             />
           </div>
           <div>
-            <q-toolbar-title style="font-size:1.7rem;"> TO-DO LIST </q-toolbar-title>
+            <q-toolbar-title style="font-size: 1.7rem">
+              TO-DO LIST
+            </q-toolbar-title>
           </div>
           <div>
             <q-btn
@@ -25,7 +27,7 @@
             />
           </div>
         </q-toolbar>
-        <q-space></q-space>
+        <q-space />
       </div>
     </div>
   </q-header>
@@ -58,6 +60,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
+import logoutService from "src/services/logout";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
@@ -101,18 +104,29 @@ export default defineComponent({
   setup() {
     const $q = useQuasar();
     const router = useRouter();
+    const { logoutId } = logoutService();
     const logoutif = localStorage.getItem("logout");
     const admin = localStorage.getItem("admin");
-    const logout = async () => {
-      localStorage.removeItem("admin");
-      localStorage.removeItem("userToken");
-      localStorage.removeItem("logout");
-      $q.notify({
-        message: "Logout!",
-        icon: "error",
-        color: "negative",
-      });
-      router.push({ name: "loginPage" });
+    const logout = async (id) => {
+      try {
+        await logoutId(id);
+        localStorage.removeItem("userToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("admin");
+        localStorage.removeItem("logout");
+        $q.notify({
+          message: "Logout!",
+          icon: "error",
+          color: "negative",
+        });
+        router.push({ name: "loginPage" });
+      } catch (error) {
+        $q.notify({
+          message: "Error! Not logged or error connection server",
+          icon: "error",
+          color: "negative",
+        });
+      }
     };
 
     return {

@@ -2,7 +2,7 @@
   <tool-bar />
   <q-page>
     <div class="row justify-center items-center content-center">
-      <div class="col-10 q-gutter-sm q-col-gutter-sm">
+      <div class="col-11 q-gutter-sm q-col-gutter-sm">
         <q-space />
         <div
           class="row justify-center text-bold text-primary"
@@ -127,6 +127,13 @@ export default defineComponent({
         name: "admin",
         field: "admin",
         label: "Admin",
+        align: "left",
+        sortable: true,
+      },
+      {
+        name: "online",
+        field: "online",
+        label: "Online",
         align: "left",
         sortable: true,
       },

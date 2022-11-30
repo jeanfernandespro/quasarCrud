@@ -2,7 +2,7 @@
   <tool-bar />
   <q-page>
     <div class="row justify-center items-center content-center">
-      <div class="col-10 q-gutter-sm q-col-gutter-sm">
+      <div class="col-11 q-gutter-sm q-col-gutter-sm">
         <q-space />
         <div
           class="row justify-center text-bold text-primary"
@@ -190,7 +190,7 @@ export default defineComponent({
 
 <style lang="sass">
 .my-sticky-virtscroll-table
-  height: 400px
+  height: 420px
 
   .q-table__top,
   .q-table__bottom,

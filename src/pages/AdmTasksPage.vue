@@ -2,7 +2,7 @@
   <tool-bar />
   <q-page>
     <div class="row justify-center items-center content-center">
-      <div class="col-10 q-gutter-sm q-col-gutter-sm">
+      <div class="col-11 q-gutter-sm q-col-gutter-sm">
         <q-space />
         <div
           class="row justify-center text-bold text-primary"
@@ -20,7 +20,7 @@
           virtual-scroll
           v-model:pagination="pagination"
           :rows-per-page-options="[0]"
-          :virtual-scroll-sticky-size-start="0"
+          :virtual-scroll-sticky-size-start="48"
           hide-bottom
         >
           <template v-slot:top>
@@ -89,13 +89,6 @@ export default defineComponent({
         sortable: true,
       },
       {
-        name: "username",
-        field: "username",
-        label: "Username",
-        align: "left",
-        sortable: true,
-      },
-      {
         name: "id",
         field: "id",
         label: "Task ID",
@@ -106,6 +99,13 @@ export default defineComponent({
         name: "title",
         field: "title",
         label: "Task",
+        align: "left",
+        sortable: true,
+      },
+      {
+        name: "username",
+        field: "username",
+        label: "Username",
         align: "left",
         sortable: true,
       },
@@ -197,7 +197,7 @@ export default defineComponent({
 
 <style lang="sass">
 .my-sticky-virtscroll-table
-  height: 400px
+  height: 420px
 
   .q-table__top,
   .q-table__bottom,

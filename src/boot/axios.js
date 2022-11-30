@@ -28,6 +28,7 @@ api.interceptors.response.use(
       config.headers["Authorization"] = `Bearer ${token}`;
       return api(config);
     }
+    console.log("testee");
     localStorage.removeItem("userToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("admin");
