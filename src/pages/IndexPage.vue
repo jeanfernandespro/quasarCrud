@@ -11,47 +11,49 @@
           All your tasks
         </div>
         <q-space />
-        <q-table
-          title="Tasks"
-          :rows="tasks"
-          :columns="columns"
-          row-key="index"
-          class="my-sticky-virtscroll-table"
-          virtual-scroll
-          v-model:pagination="pagination"
-          :rows-per-page-options="[0]"
-          :virtual-scroll-sticky-size-start="48"
-          hide-bottom
-        >
-          <template v-slot:top>
-            <span class="text-h5">Tasks</span>
-            <q-space />
-            <q-btn
-              color="primary"
-              label="New Task"
-              :to="{ name: 'formTask' }"
-              size="md"
-            />
-          </template>
-          <template v-slot:body-cell-actions="props">
-            <q-td :props="props" class="q-gutter-sm">
+        <q-pull-to-refresh @refresh="refresh">
+          <q-table
+            title="Tasks"
+            :rows="tasks"
+            :columns="columns"
+            row-key="index"
+            class="my-sticky-virtscroll-table"
+            virtual-scroll
+            v-model:pagination="pagination"
+            :rows-per-page-options="[0]"
+            :virtual-scroll-sticky-size-start="48"
+            hide-bottom
+          >
+            <template v-slot:top>
+              <span class="text-h5">Tasks</span>
+              <q-space />
               <q-btn
-                icon="edit"
                 color="primary"
-                dense
-                size="sm"
-                @click="editTask(props.row.id)"
+                label="New Task"
+                :to="{ name: 'formTask' }"
+                size="md"
               />
-              <q-btn
-                icon="delete"
-                color="negative"
-                dense
-                size="sm"
-                @click="deleteTask(props.row.id)"
-              />
-            </q-td>
-          </template>
-        </q-table>
+            </template>
+            <template v-slot:body-cell-actions="props">
+              <q-td :props="props" class="q-gutter-sm">
+                <q-btn
+                  icon="edit"
+                  color="primary"
+                  dense
+                  size="sm"
+                  @click="editTask(props.row.id)"
+                />
+                <q-btn
+                  icon="delete"
+                  color="negative"
+                  dense
+                  size="sm"
+                  @click="deleteTask(props.row.id)"
+                />
+              </q-td>
+            </template>
+          </q-table>
+        </q-pull-to-refresh>
         <q-space />
       </div>
     </div>
@@ -183,6 +185,12 @@ export default defineComponent({
       pagination: ref({
         rowsPerPage: 0,
       }),
+      refresh(done) {
+        setTimeout(() => {
+          getTaskByIdUser();
+          done();
+        }, 1000);
+      },
     };
   },
 });

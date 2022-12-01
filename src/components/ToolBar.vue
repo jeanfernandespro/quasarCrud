@@ -109,7 +109,11 @@ export default defineComponent({
     const admin = localStorage.getItem("admin");
     const logout = async (id) => {
       try {
-        await logoutId(id);
+        try {
+          await logoutId(id);
+        } catch (error) {
+          console.log(error);
+        }
         localStorage.removeItem("userToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("admin");

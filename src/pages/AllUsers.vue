@@ -11,34 +11,36 @@
           All platform users
         </div>
         <q-space />
-        <q-table
-          title="Users"
-          :rows="users"
-          :columns="columns"
-          row-key="index"
-          class="my-sticky-virtscroll-table"
-          virtual-scroll
-          v-model:pagination="pagination"
-          :rows-per-page-options="[0]"
-          :virtual-scroll-sticky-size-start="0"
-          hide-bottom
-        >
-          <template v-slot:top>
-            <span class="text-h5">Users</span>
-            <q-space />
-          </template>
-          <template v-slot:body-cell-actions="props">
-            <q-td :props="props" class="q-gutter-sm">
-              <q-btn
-                icon="delete"
-                color="negative"
-                dense
-                size="sm"
-                @click="deleteTask(props.row.id)"
-              />
-            </q-td>
-          </template>
-        </q-table>
+        <q-pull-to-refresh @refresh="refresh">
+          <q-table
+            title="Users"
+            :rows="users"
+            :columns="columns"
+            row-key="index"
+            class="my-sticky-virtscroll-table"
+            virtual-scroll
+            v-model:pagination="pagination"
+            :rows-per-page-options="[0]"
+            :virtual-scroll-sticky-size-start="0"
+            hide-bottom
+          >
+            <template v-slot:top>
+              <span class="text-h5">Users</span>
+              <q-space />
+            </template>
+            <template v-slot:body-cell-actions="props">
+              <q-td :props="props" class="q-gutter-sm">
+                <q-btn
+                  icon="delete"
+                  color="negative"
+                  dense
+                  size="sm"
+                  @click="deleteTask(props.row.id)"
+                />
+              </q-td>
+            </template>
+          </q-table>
+        </q-pull-to-refresh>
       </div>
     </div>
   </q-page>
@@ -89,6 +91,13 @@ export default defineComponent({
         sortable: true,
       },
       {
+        name: "online",
+        field: "online",
+        label: "Online",
+        align: "left",
+        sortable: true,
+      },
+      {
         name: "real_name",
         field: "real_name",
         label: "Name",
@@ -127,13 +136,6 @@ export default defineComponent({
         name: "admin",
         field: "admin",
         label: "Admin",
-        align: "left",
-        sortable: true,
-      },
-      {
-        name: "online",
-        field: "online",
-        label: "Online",
         align: "left",
         sortable: true,
       },
@@ -209,6 +211,13 @@ export default defineComponent({
       pagination: ref({
         rowsPerPage: 0,
       }),
+
+      refresh(done) {
+        setTimeout(() => {
+          getAllUsers();
+          done();
+        }, 1000);
+      },
     };
   },
 });

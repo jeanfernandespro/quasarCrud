@@ -11,6 +11,7 @@
           All platform tasks
         </div>
         <q-space />
+           <q-pull-to-refresh @refresh="refresh">
         <q-table
           title="Tasks"
           :rows="tasks"
@@ -39,6 +40,7 @@
             </q-td>
           </template>
         </q-table>
+        </q-pull-to-refresh>
       </div>
     </div>
   </q-page>
@@ -190,6 +192,12 @@ export default defineComponent({
       pagination: ref({
         rowsPerPage: 0,
       }),
+      refresh(done) {
+        setTimeout(() => {
+          getAllTasks();
+          done();
+        }, 1000);
+      },
     };
   },
 });

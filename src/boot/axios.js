@@ -8,36 +8,6 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use((request) => {
-  const token = localStorage.getItem("userToken");
-  if (token) {
-    request.headers.Authorization = `Bearer ${token}`;
-  }
-  return request;
-});
-
-api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    const config = error.config;
-    if (error.response && error.response.status === 401) {
-      const res = await refreshToken(error);
-      const token = res.data.data.token;
-      config.headers["Authorization"] = `Bearer ${token}`;
-      return api(config);
-    }
-    console.log("testee");
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("admin");
-    localStorage.removeItem("logout");
-    window.location.href = "/";
-    return Promise.reject(error);
-  }
-);
-
 async function refreshToken(error) {
   return new Promise((resolve, reject) => {
     try {
@@ -49,16 +19,14 @@ async function refreshToken(error) {
         },
       };
 
-      const body = {
-        refresh_token,
-      };
+      const body = {};
 
       axios
         .post(process.env.API_URL + "refresh", body, parameters)
         .then(async (res) => {
           localStorage.setItem("userToken", res.data.data.token);
           localStorage.setItem("refreshToken", res.data.data.refreshToken);
-          return resolve(res);
+          return resolve(res.data.data.token);
         })
         .catch((err) => {
           localStorage.removeItem("userToken");
@@ -78,6 +46,33 @@ async function refreshToken(error) {
     }
   });
 }
+
+api.interceptors.request.use((request) => {
+  const token = localStorage.getItem("userToken");
+  if (token) {
+    request.headers.Authorization = `Bearer ${token}`;
+  }
+  return request;
+});
+
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const config = error.config;
+    if (error.response && error.response.status === 401) {
+      const token = await refreshToken(error);
+      config.headers["Authorization"] = `Bearer ${token}`;
+      return api(config);
+    }
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("admin");
+    localStorage.removeItem("logout");
+    return Promise.reject(error);
+  }
+);
 
 export default boot(({ app }) => {
   app.config.globalProperties.$axios = axios;
